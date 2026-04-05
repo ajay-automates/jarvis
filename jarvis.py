@@ -552,9 +552,11 @@ class Jarvis:
         print(f"  💬 Jarvis: {speech}")
         self.voice.speak_sync(speech)
 
-        # Open motivational YouTube video
-        self.mac.execute_shell("open 'https://www.youtube.com/results?search_query=morning+motivation'")
-        print("  ⚡ Opened motivational YouTube")
+        # Open your YouTube video
+        self.mac.execute_shell("open 'https://www.youtube.com/shorts/8HyagF-D8N4'")
+        print("  ⚡ Opened your YouTube video")
+        time.sleep(2)
+        self.voice.speak_sync("By the way, sir — your video is gaining serious traction. The algorithm is in your favour. Keep creating, you're doing absolutely brilliant.")
 
     def run(self):
         """Main loop — run Jarvis."""
