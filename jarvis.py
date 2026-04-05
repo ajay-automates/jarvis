@@ -496,9 +496,69 @@ class Jarvis:
         if self.ears.detect_clap(indata):
             self.on_wake()
 
+    def morning_briefing(self):
+        """Fetch weather + tasks, motivate, open YouTube."""
+        print("  🌅 Running morning briefing...")
+
+        # Weather
+        weather = self.mac.execute_shell("curl -s 'wttr.in/?format=3' 2>/dev/null || echo 'weather unavailable'")
+
+        # Calendar events today
+        calendar_script = """
+        tell application "Calendar"
+            set today to current date
+            set startOfDay to today - (time of today)
+            set endOfDay to startOfDay + 86399
+            set eventList to {}
+            repeat with cal in calendars
+                set theEvents to (every event of cal whose start date >= startOfDay and start date <= endOfDay)
+                repeat with e in theEvents
+                    set end of eventList to (summary of e & " at " & ((start date of e) as string))
+                end repeat
+            end repeat
+            if eventList is {} then return "No events today"
+            return eventList as string
+        end tell
+        """
+        events = self.mac.execute_applescript(calendar_script)
+
+        # Pending reminders
+        reminders_script = """
+        tell application "Reminders"
+            set pending to {}
+            repeat with r in reminders of default list
+                if completed of r is false then
+                    set end of pending to name of r
+                end if
+            end repeat
+            if pending is {} then return "No pending reminders"
+            return pending as string
+        end tell
+        """
+        reminders = self.mac.execute_applescript(reminders_script)
+
+        print(f"  🌤️  Weather: {weather}")
+        print(f"  📅 Events: {events}")
+        print(f"  ✅ Reminders: {reminders}")
+
+        # Ask Claude for a morning briefing speech
+        context = f"Weather: {weather}\nCalendar events today: {events}\nPending reminders: {reminders}"
+        result = self.brain.think(
+            "Give me an energetic morning briefing covering the weather, my tasks for today, and end with a short motivational line. Keep it under 5 sentences total.",
+            context=context
+        )
+
+        speech = result.get("speech", "Good morning, sir. Ready for another magnificent day.")
+        print(f"  💬 Jarvis: {speech}")
+        self.voice.speak_sync(speech)
+
+        # Open motivational YouTube video
+        self.mac.execute_shell("open 'https://www.youtube.com/results?search_query=morning+motivation'")
+        print("  ⚡ Opened motivational YouTube")
+
     def run(self):
         """Main loop — run Jarvis."""
-        self.voice.speak_sync("Jarvis at your service, sir. How may I assist you?")
+        self.morning_briefing()
         print("  ✅ Jarvis is active and listening...\n")
 
         try:
