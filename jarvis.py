@@ -501,32 +501,12 @@ class Jarvis:
         self.voice.speak_sync("Jarvis at your service, sir. How may I assist you?")
         print("  ✅ Jarvis is active and listening...\n")
 
-        clap_thread = threading.Thread(target=self.run_clap_detector, daemon=True)
-        clap_thread.start()
-
-        wake_thread = threading.Thread(
-            target=self.ears.continuous_listen_for_wake,
-            args=(self.on_wake,),
-            daemon=True,
-        )
-        wake_thread.start()
-
         try:
             while self.running:
-                self.activated.wait(timeout=0.5)
-                if not self.activated.is_set():
-                    continue
-
-                self.activated.clear()
-
-                print("\n  🔔 Activated!")
-                self.activation_chime()
-                self.voice.speak_sync("Yes, sir?")
-
+                print("  🎙️  Listening...")
                 command = self.ears.listen_for_command()
-                self.process_command(command)
-
-                print("\n  ✅ Ready. Listening for wake trigger...\n")
+                if command:
+                    self.process_command(command)
 
         except KeyboardInterrupt:
             print("\n\n  👋 Jarvis shutting down. Goodbye, sir.")
