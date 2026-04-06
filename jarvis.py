@@ -442,6 +442,13 @@ class Jarvis:
             self.voice.speak_sync("I didn't catch that, sir.")
             return
 
+        # Wake-up restart trigger
+        if "daddy" in command.lower() and "home" in command.lower():
+            print(f'  🏠 Wake trigger: "{command}" — restarting from the top, sir.')
+            self.brain.conversation_history = []
+            self.morning_briefing()
+            return
+
         print(f'  📝 Command: "{command}"')
         print(f"  🧠 Thinking...")
 
@@ -552,9 +559,23 @@ class Jarvis:
         print(f"  💬 Jarvis: {speech}")
         self.voice.speak_sync(speech)
 
-        # Open your YouTube video
+        # Open your YouTube video (left monitor)
         self.mac.execute_shell("open 'https://www.youtube.com/shorts/8HyagF-D8N4'")
         print("  ⚡ Opened your YouTube video")
+
+        # Open Claude Desktop on the right monitor
+        claude_script = """
+        tell application "Claude" to activate
+        delay 1
+        tell application "System Events"
+            tell process "Claude"
+                set position of window 1 to {200, 50}
+            end tell
+        end tell
+        """
+        self.mac.execute_applescript(claude_script)
+        print("  ⚡ Opened Claude Desktop on right monitor")
+
         time.sleep(2)
         self.voice.speak_sync("By the way, sir — your video is gaining serious traction. The algorithm is in your favour. Keep creating, you're doing absolutely brilliant.")
 
