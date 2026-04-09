@@ -584,7 +584,7 @@ class Jarvis:
         print("  ⚡ Opened Claude Desktop on right monitor")
 
         time.sleep(2)
-        self.voice.speak_sync("By the way, sir — your video is gaining serious traction. The algorithm is in your favour. Keep creating, you're doing absolutely brilliant.")
+        # self.voice.speak_sync("By the way, sir — your video is gaining serious traction. The algorithm is in your favour. Keep creating, you're doing absolutely brilliant.")
 
     def run(self):
         """Main loop — run Jarvis."""
