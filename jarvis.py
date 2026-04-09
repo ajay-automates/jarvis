@@ -566,9 +566,9 @@ class Jarvis:
         print(f"  💬 Jarvis: {speech}")
         self.voice.speak_sync(speech)
 
-        # Open your YouTube video (left monitor)
-        self.mac.execute_shell("open 'https://www.youtube.com/watch?v=EfmVRQjoNcY&t=22s'")
-        print("  ⚡ Opened your YouTube video")
+        # Open your YouTube video (left monitor) - disabled for now
+        # self.mac.execute_shell("open 'https://www.youtube.com/watch?v=EfmVRQjoNcY&t=22s'")
+        # print("  ⚡ Opened your YouTube video")
 
         # Open Claude Desktop on the right monitor
         claude_script = """
