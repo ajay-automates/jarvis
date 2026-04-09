@@ -459,8 +459,8 @@ class Jarvis:
         # LinkedIn jobs command
         if "apply jobs in linkedin" in command.lower() or "apply to jobs in linkedin" in command.lower():
             print(f'  💼 Opening LinkedIn bot launcher...')
-            self.mac.execute_shell("open ~/Desktop/'LinkedIn Bot Launcher.app'")
-            self.voice.speak_sync("Opening LinkedIn bot launcher for you, sir.")
+            self.voice.speak_sync("Launching LinkedIn.")
+            self.mac.execute_shell("open -a 'LinkedIn Bot Launcher'")
             return
 
         print(f'  📝 Command: "{command}"')
