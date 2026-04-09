@@ -450,7 +450,7 @@ class Jarvis:
             return
 
         # Dice jobs command
-        if "apply" in command.lower() and "jobs" in command.lower() and "dice" in command.lower():
+        if "start applying to the jobs" in command.lower():
             print(f'  💼 Opening Dice jobs app...')
             self.mac.execute_shell("open ~/Desktop/dice.command")
             self.voice.speak_sync("Opening Dice jobs for you, sir.")
