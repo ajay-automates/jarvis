@@ -456,6 +456,13 @@ class Jarvis:
             self.voice.speak_sync("Opening Dice jobs for you, sir.")
             return
 
+        # LinkedIn jobs command
+        if "apply jobs in linkedin" in command.lower() or "apply to jobs in linkedin" in command.lower():
+            print(f'  💼 Opening LinkedIn bot launcher...')
+            self.mac.execute_shell("open ~/Desktop/'LinkedIn Bot Launcher.app'")
+            self.voice.speak_sync("Opening LinkedIn bot launcher for you, sir.")
+            return
+
         print(f'  📝 Command: "{command}"')
         print(f"  🧠 Thinking...")
 
