@@ -449,6 +449,13 @@ class Jarvis:
             self.morning_briefing()
             return
 
+        # Dice jobs command
+        if "apply" in command.lower() and "jobs" in command.lower() and "dice" in command.lower():
+            print(f'  💼 Opening Dice jobs app...')
+            self.mac.execute_shell("open ~/Desktop/dice.command")
+            self.voice.speak_sync("Opening Dice jobs for you, sir.")
+            return
+
         print(f'  📝 Command: "{command}"')
         print(f"  🧠 Thinking...")
 
